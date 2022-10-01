@@ -6,6 +6,8 @@ using Terraria.ModLoader.Utilities;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.ItemDropRules;
+using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
@@ -90,6 +92,10 @@ namespace ThreatOfPrecipitation.Content.NPCs
             {
 				NPC.frame.Y = 0;
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CytokineticSlime>(), 8));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

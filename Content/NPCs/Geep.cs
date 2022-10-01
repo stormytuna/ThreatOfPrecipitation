@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.ItemDropRules;
+using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
@@ -103,6 +105,11 @@ namespace ThreatOfPrecipitation.Content.NPCs
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement("A large slime made of a unique type of gel that can undergo mitosis to save its life.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CytokineticSlime>(), 8));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

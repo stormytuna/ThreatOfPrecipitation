@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.ItemDropRules;
+using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
@@ -97,6 +99,10 @@ namespace ThreatOfPrecipitation.Content.NPCs
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement("A humungous slime capable of undergoing mitosis to evade death. It tastes oddly bitter despite smelling of strawberries.")
             });
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CytokineticSlime>(), 8));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
