@@ -6,6 +6,7 @@ using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
@@ -25,7 +26,7 @@ namespace ThreatOfPrecipitation.Content.NPCs
             NPC.lifeMax = 160;
             NPC.value = 400f; // 4 silver
             NPC.width = 44;
-            NPC.height = 38;
+            NPC.height = 36;
             NPC.aiStyle = NPCAIStyleID.Slime;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -46,6 +47,22 @@ namespace ThreatOfPrecipitation.Content.NPCs
         public override void AI()
         {
             NPC.dontTakeDamage = false;
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            // Draws eyes
+            Texture2D texture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/NPCs/Geep_Glow").Value;
+            Vector2 position = NPC.Center - Main.screenPosition;
+            int frameHeight = texture.Height / Main.npcFrameCount[Type];
+            int startY = NPC.frame.Y;
+            Rectangle sourceRect = new Rectangle(0, startY, texture.Width, frameHeight);
+            Vector2 origin = sourceRect.Size() / 2f;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (NPC.direction == -1)
+                spriteEffects = SpriteEffects.FlipHorizontally;
+
+            spriteBatch.Draw(texture, position, sourceRect, drawColor, 0f, origin, 1f, spriteEffects, 0f);
         }
 
         public override void FindFrame(int frameHeight)
