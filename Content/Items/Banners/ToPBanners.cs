@@ -41,6 +41,9 @@ namespace ThreatOfPrecipitation.Content.Items.Banners
             {
 				default:
 					return;
+				case 0:
+					itemType = ModContent.ItemType<GipBanner>();
+					break;
             }
 
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, itemType);
@@ -57,6 +60,9 @@ namespace ThreatOfPrecipitation.Content.Items.Banners
                 {
 					default:
 						return;
+					case 0:
+						type = ModContent.NPCType<Gip>();
+						break;
                 }
 
 				Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<Gip>()] = true;
