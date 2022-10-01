@@ -10,23 +10,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
-    public class Geep : ModNPC
+    public class Gup : ModNPC
     {
-        
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Geep");
-            Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
+            DisplayName.SetDefault("Gup");
+            Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.RainbowSlime];
         }
 
         public override void SetDefaults()
         {
-            NPC.damage = 55;
-            NPC.defense = 20;
-            NPC.lifeMax = 160;
-            NPC.value = 400f; // 4 silver
-            NPC.width = 44;
-            NPC.height = 36;
+            NPC.damage = 90;
+            NPC.defense = 30;
+            NPC.lifeMax = 500;
+            NPC.value = 3000f; // 3 silver
+            NPC.width = 74;
+            NPC.height = 56;
             NPC.aiStyle = NPCAIStyleID.Slime;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -36,23 +35,18 @@ namespace ThreatOfPrecipitation.Content.NPCs
 
         public override void OnKill()
         {
-            int slime = NPC.NewNPC(NPC.GetSource_ReleaseEntity(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gip>(), Target: NPC.target);
+            int slime = NPC.NewNPC(NPC.GetSource_ReleaseEntity(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Geep>(), Target: NPC.target);
             Main.npc[slime].velocity = new Vector2(-3f, -3f);
             Main.npc[slime].dontTakeDamage = true;
-            slime = NPC.NewNPC(NPC.GetSource_ReleaseEntity(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gip>(), Target: NPC.target);
+            slime = NPC.NewNPC(NPC.GetSource_ReleaseEntity(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Geep>(), Target: NPC.target);
             Main.npc[slime].velocity = new Vector2(3f, -3f);
             Main.npc[slime].dontTakeDamage = true;
-        }
-
-        public override void AI()
-        {
-            NPC.dontTakeDamage = false;
         }
 
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             // Draws eyes
-            Texture2D texture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/NPCs/Geep_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/NPCs/Gup_Glow").Value;
             Vector2 position = NPC.Center - Main.screenPosition;
             int frameHeight = texture.Height / Main.npcFrameCount[Type];
             int startY = NPC.frame.Y;
@@ -79,18 +73,18 @@ namespace ThreatOfPrecipitation.Content.NPCs
             }
             if (num2 > 0)
             {
-                NPC.frameCounter++;
+                NPC.frameCounter += 1.0;
             }
-            if (num2 > 4)
+            if (num2 == 4)
             {
-                NPC.frameCounter++;
+                NPC.frameCounter += 1.0;
             }
-            if (NPC.frameCounter >= 8)
+            if (NPC.frameCounter >= 8.0)
             {
                 NPC.frame.Y += frameHeight;
-                NPC.frameCounter = 0;
+                NPC.frameCounter = 0.0;
             }
-            if (NPC.frame.Y > frameHeight)
+            if (NPC.frame.Y >= frameHeight * Main.npcFrameCount[Type])
             {
                 NPC.frame.Y = 0;
             }
@@ -101,13 +95,13 @@ namespace ThreatOfPrecipitation.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-                new FlavorTextBestiaryInfoElement("A large slime made of a unique type of gel that can undergo mitosis to save its life.")
+                new FlavorTextBestiaryInfoElement("A humungous slime capable of undergoing mitosis to evade death. It tastes oddly bitter despite smelling of strawberries.")
             });
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneForest && Main.hardMode && !NPC.downedPlantBoss)
+            if (spawnInfo.Player.ZoneForest && NPC.downedPlantBoss)
             {
                 return SpawnCondition.OverworldDaySlime.Chance * 0.2f;
             }
