@@ -44,6 +44,9 @@ namespace ThreatOfPrecipitation.Content.Items.Banners
 				case 0:
 					itemType = ModContent.ItemType<GipBanner>();
 					break;
+				case 1:
+					itemType = ModContent.ItemType<GeepBanner>();
+					break;
             }
 
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, itemType);
@@ -62,6 +65,9 @@ namespace ThreatOfPrecipitation.Content.Items.Banners
 						return;
 					case 0:
 						type = ModContent.NPCType<Gip>();
+						break;
+					case 1:
+						type = ModContent.NPCType<Geep>();
 						break;
                 }
 
