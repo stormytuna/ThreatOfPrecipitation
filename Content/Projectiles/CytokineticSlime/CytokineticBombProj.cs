@@ -62,8 +62,8 @@ namespace ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime
             // Jank way to check for third child but ai[0] and ai[1] are fucked with by vanilla AI
             if (childCount != 2)
             {
-                Vector2 vel = new Vector2(1.5f, -3f) + Projectile.velocity;
-                vel *= Main.rand.NextFloat(0.8f, 1f);
+                Vector2 vel = new Vector2(5f, -5f);
+                vel *= Main.rand.NextFloat(0.6f, 1f);
                 Projectile proj;
 
                 proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, vel, Type, 0, 0f, Projectile.owner, childCount + 1);
