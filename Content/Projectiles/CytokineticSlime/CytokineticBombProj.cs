@@ -56,6 +56,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime
             int minY;
             int maxY;
             bool shouldExplodeWalls;
+            Projectile.Resize(22, 22);
 
             // If this isn't the third child, we should spawn a couple more bombs
             // Jank way to check for third child but ai[0] and ai[1] are fucked with by vanilla AI
@@ -128,7 +129,6 @@ namespace ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime
 
             // If this is the third child, we should explode some stuff
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-            Projectile.Resize(22, 22);
 
             #region Visuals
             // Smoke dust
