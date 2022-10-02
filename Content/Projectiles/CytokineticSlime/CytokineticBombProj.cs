@@ -162,7 +162,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime
             gore.velocity.Y -= 1f;
             #endregion
 
-            range = 4;
+            range = 3;
             minX = (int)(Projectile.Center.X / 16f - range);
             maxX = (int)(Projectile.Center.X / 16f + range);
             minY = (int)(Projectile.Center.Y / 16f - range);
