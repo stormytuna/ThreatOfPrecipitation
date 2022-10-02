@@ -19,11 +19,11 @@ namespace ThreatOfPrecipitation.Content.Items.CytokineticSlime
 
         public override void SetDefaults()
         {
-            Item.width = 2;
-            Item.height = 2;
+            Item.width = 20;
+            Item.height = 18;
             Item.maxStack = 999;
             Item.alpha = 60;
-            Item.value = 15;
+            Item.value = Item.sellPrice(copper: 15);
         }
     }
 }
