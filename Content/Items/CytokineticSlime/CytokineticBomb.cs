@@ -16,7 +16,7 @@ namespace ThreatOfPrecipitation.Content.Items.CytokineticSlime
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("A small explosion that will destroy most tiles\nSplits on impact");
+            Tooltip.SetDefault("A small explosion that will destroy most tiles\nSplits in two when it goes off");
         }
 
         public override void SetDefaults()
