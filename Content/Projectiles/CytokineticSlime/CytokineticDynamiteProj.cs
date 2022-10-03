@@ -17,7 +17,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cytokinetic Bomb");
+            DisplayName.SetDefault("Cytokinetic Dynamite");
         }
 
         public override void SetDefaults()
