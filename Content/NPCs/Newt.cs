@@ -14,9 +14,11 @@ using System.Collections.Generic;
 using Terraria.Localization;
 using Terraria.GameContent;
 using ReLogic.Content;
+using ThreatOfPrecipitation.Content.Items;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
+    [AutoloadHead]
     public class Newt : ModNPC
     {
         
@@ -78,7 +80,16 @@ namespace ThreatOfPrecipitation.Content.NPCs
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return false; // TODO: Add in a condition asking if the player has 2 lunar coins
+            foreach (Player player in Main.player)
+            {
+                foreach (Item item in player.inventory)
+                {
+                    if (item.type == ModContent.ItemType<LunarCoin>() && item.stack > 5)
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public override ITownNPCProfile TownNPCProfile()
@@ -116,31 +127,7 @@ namespace ThreatOfPrecipitation.Content.NPCs
 
         public override bool CanGoToStatue(bool toKingStatue) => true; // Can go to either statue, Newt uses it/its in ror2
 
-        /* TODO: implement Newt attacks
-        public override void TownNPCAttackStrength(ref int damage, ref float knockback)
-        {
-            damage = 20;
-            knockback = 4;
-        }
-
-        public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
-        {
-            cooldown = 30;
-            randExtraCooldown = 30;
-        }
-
-        public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
-        {
-            projType = someType;
-            attackDelay = 1;
-        }
-
-        public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
-        {
-            multiplier = 12f;
-            randomOffset = 2f;
-        }
-        */
+        // TODO: implement Newt attacks
     }
 
     public class NewtProfile : ITownNPCProfile
