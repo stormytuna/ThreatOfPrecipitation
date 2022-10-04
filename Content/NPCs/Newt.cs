@@ -46,7 +46,7 @@ namespace ThreatOfPrecipitation.Content.NPCs
                 .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love)
                 .SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
                 .SetBiomeAffection<OceanBiome>(AffectionLevel.Dislike)
-                .SetNPCAffection(663, AffectionLevel.Love)
+                .SetNPCAffection(NPCID.Truffle, AffectionLevel.Love)
                 .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
                 .SetNPCAffection(NPCID.Angler, AffectionLevel.Dislike)
                 .SetNPCAffection(NPCID.GoblinTinkerer, AffectionLevel.Hate);
