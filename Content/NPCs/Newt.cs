@@ -15,6 +15,7 @@ using Terraria.Localization;
 using Terraria.GameContent;
 using ReLogic.Content;
 using ThreatOfPrecipitation.Content.Items;
+using ThreatOfPrecipitation.Content.Buffs.Lunar;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
@@ -122,7 +123,10 @@ namespace ThreatOfPrecipitation.Content.NPCs
 
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
-            // TODO: Add items to shop
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ShapedGlass_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
         }
 
         public override bool CanGoToStatue(bool toKingStatue) => true; // Can go to either statue, Newt uses it/its in ror2
