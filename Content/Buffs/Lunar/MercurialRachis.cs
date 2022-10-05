@@ -29,7 +29,7 @@ namespace ThreatOfPrecipitation.Content.Buffs.Lunar
 
             foreach (Player pl in Main.player)
             {
-                if (pl.whoAmI == player.whoAmI)
+                if (pl.GetModPlayer<LunarBuffPlayer>().mercurialRachis)
                     continue;
                 
                 if (Vector2.DistanceSquared(player.Center, pl.Center) < rangeSquared)
