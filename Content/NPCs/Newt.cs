@@ -127,7 +127,13 @@ namespace ThreatOfPrecipitation.Content.NPCs
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
             nextSlot++;
+
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<MercurialRachis_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
+
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<StoneFluxPauldron_Item>());
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
             nextSlot++;
