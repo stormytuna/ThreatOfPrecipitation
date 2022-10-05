@@ -31,14 +31,35 @@ namespace ThreatOfPrecipitation.Common.Players
                     #endregion
                     return;
                 }
+
+                if (Main.mouseItem.type == ModContent.ItemType<MercurialRachis_Item>())
+                {
+                    Main.mouseItem.TurnToAir();
+                    Player.AddBuff(ModContent.BuffType<MercurialRachis>(), 10 * 60 * 60);
+
+                    #region Visuals
+
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 16, 0f, 0f, 40, default, 1.2f);
+                        dust.velocity *= 2f;
+                    }
+
+                    #endregion
+                    return;
+                }
             }
         }
 
         public bool shapedGlass;
+        public bool mercurialRachis;
+        public bool mercurialRachisAura;
 
         public override void ResetEffects()
         {
             shapedGlass = false;
+            mercurialRachis = false;
+            mercurialRachisAura = false;
         }
 
         public override void PostUpdateBuffs()
@@ -46,6 +67,11 @@ namespace ThreatOfPrecipitation.Common.Players
             if (shapedGlass)
             {
                 Player.statLifeMax2 /= 2;
+            }
+
+            if (mercurialRachis || mercurialRachisAura)
+            {
+                Player.GetDamage(DamageClass.Generic) += 0.2f;
             }
         }
 
