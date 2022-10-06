@@ -68,6 +68,24 @@ namespace ThreatOfPrecipitation.Common.Players
 
                     return;
                 }
+
+                if (Main.mouseItem.type == ModContent.ItemType<LightFluxPauldron_Item>())
+                {
+                    Main.mouseItem.TurnToAir();
+                    Player.AddBuff(ModContent.BuffType<LightFluxPauldron>(), 10 * 60 * 60);
+
+                    #region Visuals
+
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Cloud, 0f, 0f, 40, default, 1.2f);
+                        dust.velocity *= 2f;
+                    }
+
+                    #endregion
+
+                    return;
+                }
             }
         }
 
@@ -75,6 +93,9 @@ namespace ThreatOfPrecipitation.Common.Players
         public bool mercurialRachis;
         public bool mercurialRachisAura;
         public bool stoneFluxPauldron;
+        public bool lightFluxPauldron;
+
+        public bool[] doReduceDebuffTime = new bool[Player.MaxBuffs];
 
         public override void ResetEffects()
         {
@@ -82,6 +103,27 @@ namespace ThreatOfPrecipitation.Common.Players
             mercurialRachis = false;
             mercurialRachisAura = false;
             stoneFluxPauldron = false;
+            lightFluxPauldron = false;
+        }
+
+        public override void PreUpdateBuffs()
+        {
+            if (lightFluxPauldron)
+            {
+                for (int i = 0; i < Player.MaxBuffs; i++)
+                {
+                    if (Player.buffType[i] < 0)
+                    {
+                        doReduceDebuffTime[i] = true;
+                    }
+
+                    if (doReduceDebuffTime[i] && Main.debuff[Player.buffType[i]])
+                    {
+                        doReduceDebuffTime[i] = false;
+                        Player.buffTime[i] /= 2;
+                    }
+                }
+            }
         }
 
         public override void PostUpdateBuffs()
@@ -96,6 +138,14 @@ namespace ThreatOfPrecipitation.Common.Players
                 Player.GetDamage(DamageClass.Generic) += 0.2f;
             }
 
+            if (lightFluxPauldron)
+            {
+                Player.GetAttackSpeed(DamageClass.Generic) /= 2;
+            }
+        }
+
+        public override void PostUpdateRunSpeeds()
+        {
             if (stoneFluxPauldron)
             {
                 Player.maxRunSpeed /= 2f;
@@ -106,7 +156,6 @@ namespace ThreatOfPrecipitation.Common.Players
                 Player.accRunSpeed /= 2f;
                 Player.wingAccRunSpeed /= 2f;
             }
-            Main.NewText(Player.velocity);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)

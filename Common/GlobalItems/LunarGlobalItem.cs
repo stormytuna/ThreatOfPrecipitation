@@ -33,6 +33,47 @@ namespace ThreatOfPrecipitation.Common.GlobalItems
                     }
                 }
             }
+
+            if (modPlayer.lightFluxPauldron)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Mod == "Terraria" && x.Name == "Speed");
+                if (line != null)
+                {
+					// Code from vanilla to make attack speed display properly
+					if (item.useAnimation * 2 <= 8)
+					{
+						line.Text = Lang.tip[6].Value;
+					}
+					else if (item.useAnimation * 2 <= 20)
+					{
+						line.Text = Lang.tip[7].Value;
+					}
+					else if (item.useAnimation * 2 <= 25)
+					{
+						line.Text = Lang.tip[8].Value;
+					}
+					else if (item.useAnimation * 2 <= 30)
+					{
+						line.Text = Lang.tip[9].Value;
+					}
+					else if (item.useAnimation * 2 <= 35)
+					{
+						line.Text = Lang.tip[10].Value;
+					}
+					else if (item.useAnimation * 2 <= 45)
+					{
+						line.Text = Lang.tip[11].Value;
+					}
+					else if (item.useAnimation * 2 <= 55)
+					{
+						line.Text = Lang.tip[12].Value;
+					}
+					else
+					{
+						line.Text = Lang.tip[13].Value;
+					}
+				}
+            }
         }
     }
 }
