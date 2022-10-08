@@ -138,6 +138,16 @@ namespace ThreatOfPrecipitation.Content.NPCs
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
             nextSlot++;
 
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<LightFluxPauldron_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
+
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<BrittleCrown_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
+
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Purity_Item>());
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
