@@ -108,6 +108,24 @@ namespace ThreatOfPrecipitation.Common.Players
 
                     return;
                 }
+
+                if (Main.mouseItem.type == ModContent.ItemType<Purity_Item>())
+                {
+                    Main.mouseItem.TurnToAir();
+                    Player.AddBuff(ModContent.BuffType<Purity>(), 10 * 60 * 60);
+
+                    #region Visuals
+
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Cloud, 0f, 0f, 40, default, 1.2f);
+                        dust.velocity *= 2f;
+                    }
+
+                    #endregion
+
+                    return;
+                }
             }
         }
 
@@ -117,6 +135,7 @@ namespace ThreatOfPrecipitation.Common.Players
         public bool stoneFluxPauldron;
         public bool lightFluxPauldron;
         public bool brittleCrown;
+        public bool purity;
 
         public bool[] doReduceDebuffTime = new bool[Player.MaxBuffs];
 
@@ -128,6 +147,7 @@ namespace ThreatOfPrecipitation.Common.Players
             stoneFluxPauldron = false;
             lightFluxPauldron = false;
             brittleCrown = false;
+            purity = false;
         }
 
         public override void PreUpdateBuffs()
@@ -179,6 +199,15 @@ namespace ThreatOfPrecipitation.Common.Players
                 Player.runSoundDelay *= 2;
                 Player.accRunSpeed /= 2f;
                 Player.wingAccRunSpeed /= 2f;
+            }
+        }
+
+        public override void PostUpdate()
+        {
+            if (purity)
+            {
+                Player.luck = Player.luckMinimumCap;
+                Player.luckNeedsSync = true;
             }
         }
 
