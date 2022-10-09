@@ -144,6 +144,24 @@ namespace ThreatOfPrecipitation.Common.Players
 
                     return;
                 }
+
+                if (Main.mouseItem.type == ModContent.ItemType<GestureOfTheDrowned_Item>())
+                {
+                    Main.mouseItem.TurnToAir();
+                    Player.AddBuff(ModContent.BuffType<GestureOfTheDrowned>(), 10 * 60 * 60);
+
+                    #region Visuals
+
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Cloud, 0f, 0f, 40, default, 1.2f);
+                        dust.velocity *= 2f;
+                    }
+
+                    #endregion
+
+                    return;
+                }
             }
         }
 
@@ -156,8 +174,10 @@ namespace ThreatOfPrecipitation.Common.Players
         public bool purity;
         public bool transendence;
         public bool transendenceHeal = true; // Heals to full health if youve just got the buff
+        public bool gestureOfTheDrowned;
 
         public bool[] doLightFluxReduceDebuffTime = new bool[Player.MaxBuffs];
+        public bool[] doGestureReduceDebuffTime = new bool[Player.MaxBuffs];
 
         public override void ResetEffects()
         {
@@ -169,6 +189,7 @@ namespace ThreatOfPrecipitation.Common.Players
             brittleCrown = false;
             purity = false;
             transendence = false;
+            gestureOfTheDrowned = false;
         }
 
         public override void PreUpdateBuffs()
@@ -186,6 +207,23 @@ namespace ThreatOfPrecipitation.Common.Players
                     {
                         doLightFluxReduceDebuffTime[i] = false;
                         Player.buffTime[i] /= 2;
+                    }
+                }
+            }
+
+            if (Player.HasBuff(ModContent.BuffType<GestureOfTheDrowned>()))
+            {
+                for (int i = 0; i < Player.MaxBuffs; i++)
+                {
+                    if (Player.buffTime[i] <= 0)
+                    {
+                        doGestureReduceDebuffTime[i] = true;
+                    }
+
+                    if (doGestureReduceDebuffTime[i] && Player.buffType[i] == BuffID.PotionSickness)
+                    {
+                        doGestureReduceDebuffTime[i] = false;
+                        Player.buffTime[i] = (int)(Player.buffTime[i] / 1.5f);
                     }
                 }
             }
@@ -245,6 +283,11 @@ namespace ThreatOfPrecipitation.Common.Players
                 Player.luck = Player.luckMinimumCap;
                 Player.luckNeedsSync = true;
             }
+
+            if (gestureOfTheDrowned && Player.potionDelay <= 0 && Player.statLife < Player.statLifeMax2)
+            {
+                Player.QuickHeal();
+            }
         }
 
         public override void UpdateBadLifeRegen()
@@ -261,6 +304,11 @@ namespace ThreatOfPrecipitation.Common.Players
             if (transendence)
             {
                 healValue /= 2;
+            }
+
+            if (gestureOfTheDrowned)
+            {
+                healValue = (int)(healValue * 1.5f);
             }
         }
 

@@ -159,6 +159,11 @@ namespace ThreatOfPrecipitation.Content.NPCs
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
             nextSlot++;
+
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<GestureOfTheDrowned_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
         }
 
         public override bool CanGoToStatue(bool toKingStatue) => true; // Can go to either statue, Newt uses it/its in ror2
