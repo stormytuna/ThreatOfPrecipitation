@@ -157,7 +157,7 @@ namespace ThreatOfPrecipitation.Common.Players
         public bool transendence;
         public bool transendenceHeal = true; // Heals to full health if youve just got the buff
 
-        public bool[] doReduceDebuffTime = new bool[Player.MaxBuffs];
+        public bool[] doLightFluxReduceDebuffTime = new bool[Player.MaxBuffs];
 
         public override void ResetEffects()
         {
@@ -173,18 +173,18 @@ namespace ThreatOfPrecipitation.Common.Players
 
         public override void PreUpdateBuffs()
         {
-            if (lightFluxPauldron)
+            if (Player.HasBuff(ModContent.BuffType<LightFluxPauldron>()))
             {
                 for (int i = 0; i < Player.MaxBuffs; i++)
                 {
-                    if (Player.buffType[i] < 0)
+                    if (Player.buffTime[i] <= 0)
                     {
-                        doReduceDebuffTime[i] = true;
+                        doLightFluxReduceDebuffTime[i] = true;
                     }
 
-                    if (doReduceDebuffTime[i] && Main.debuff[Player.buffType[i]])
+                    if (doLightFluxReduceDebuffTime[i] && Main.debuff[Player.buffType[i]])
                     {
-                        doReduceDebuffTime[i] = false;
+                        doLightFluxReduceDebuffTime[i] = false;
                         Player.buffTime[i] /= 2;
                     }
                 }
