@@ -126,6 +126,24 @@ namespace ThreatOfPrecipitation.Common.Players
 
                     return;
                 }
+
+                if (Main.mouseItem.type == ModContent.ItemType<Transcendence_Item>())
+                {
+                    Main.mouseItem.TurnToAir();
+                    Player.AddBuff(ModContent.BuffType<Transcendence>(), 10 * 60 * 60);
+
+                    #region Visuals
+
+                    for (int i = 0; i < 40; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Cloud, 0f, 0f, 40, default, 1.2f);
+                        dust.velocity *= 2f;
+                    }
+
+                    #endregion
+
+                    return;
+                }
             }
         }
 
@@ -136,6 +154,8 @@ namespace ThreatOfPrecipitation.Common.Players
         public bool lightFluxPauldron;
         public bool brittleCrown;
         public bool purity;
+        public bool transendence;
+        public bool transendenceHeal = true; // Heals to full health if youve just got the buff
 
         public bool[] doReduceDebuffTime = new bool[Player.MaxBuffs];
 
@@ -148,6 +168,7 @@ namespace ThreatOfPrecipitation.Common.Players
             lightFluxPauldron = false;
             brittleCrown = false;
             purity = false;
+            transendence = false;
         }
 
         public override void PreUpdateBuffs()
@@ -168,6 +189,11 @@ namespace ThreatOfPrecipitation.Common.Players
                     }
                 }
             }
+
+            if (!Player.HasBuff(ModContent.BuffType<Transcendence>()))
+            {
+                transendenceHeal = true;
+            }
         }
 
         public override void PostUpdateBuffs()
@@ -185,6 +211,16 @@ namespace ThreatOfPrecipitation.Common.Players
             if (lightFluxPauldron)
             {
                 Player.GetAttackSpeed(DamageClass.Generic) /= 2;
+            }
+
+            if (transendence)
+            {
+                Player.statLifeMax2 += Player.statLifeMax;
+                if (transendenceHeal)
+                {
+                    Player.statLife = Player.statLifeMax2;
+                    transendence = false;
+                }
             }
         }
 
@@ -208,6 +244,23 @@ namespace ThreatOfPrecipitation.Common.Players
             {
                 Player.luck = Player.luckMinimumCap;
                 Player.luckNeedsSync = true;
+            }
+        }
+
+        public override void UpdateBadLifeRegen()
+        {
+            if (transendence)
+            {
+                Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+            }
+        }
+
+        public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+        {
+            if (transendence)
+            {
+                healValue /= 2;
             }
         }
 

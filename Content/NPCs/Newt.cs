@@ -123,6 +123,8 @@ namespace ThreatOfPrecipitation.Content.NPCs
 
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
+            // TODO: Add conditions for these to be sold
+
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<ShapedGlass_Item>());
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
@@ -149,6 +151,11 @@ namespace ThreatOfPrecipitation.Content.NPCs
             nextSlot++;
 
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Purity_Item>());
+            shop.item[nextSlot].shopCustomPrice = 2;
+            shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
+            nextSlot++;
+
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Transcendence_Item>());
             shop.item[nextSlot].shopCustomPrice = 2;
             shop.item[nextSlot].shopSpecialCurrency = ThreatOfPrecipitation.LunarCoinCurrencyID;
             nextSlot++;
