@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent.ItemDropRules;
 using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 
-namespace ThreatOfPrecipitation.Content.NPCs
+namespace ThreatOfPrecipitation.Content.NPCs.GupFamily
 {
     public class Gip : ModNPC
     {
@@ -41,7 +41,7 @@ namespace ThreatOfPrecipitation.Content.NPCs
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             // Draws eyes
-            Texture2D texture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/NPCs/Gip_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/NPCs/GupFamily/Gip_Glow").Value;
             Vector2 position = NPC.Center - Main.screenPosition;
             int frameHeight = texture.Height / Main.npcFrameCount[Type];
             int startY = NPC.frame.Y;
