@@ -11,6 +11,7 @@ using ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime;
 using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 using ThreatOfPrecipitation.Content.Projectiles;
 using ThreatOfPrecipitation.Content.Projectiles.Weapons;
+using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Weapons
 {
@@ -19,6 +20,7 @@ namespace ThreatOfPrecipitation.Content.Items.Weapons
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("A seeking glaive that bounces up to 6 times, each bounce increasing crit chance by 5%");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
