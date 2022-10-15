@@ -38,10 +38,11 @@ namespace ThreatOfPrecipitation
 
         /// <summary>Gets the closest hostile NPC within the range of that position</summary>
         /// <param name="position">The position, should be the center of the search and usually the center of another entity</param>
+        /// <param name="excludedNPCs">The whoAmI fields of any NPCs that are excluded from the search</param>
         /// <param name="range">The range measured in units, 1 tile is 16 units</param>
         /// <param name="careAboutLineOfSight">Whether the function should check Collision.CanHit</param>
         /// <returns>Returns the closest NPC. Returns null if no NPC is found</returns>
-        public static NPC GetClosestEnemy(Vector2 position, float range, bool careAboutLineOfSight)
+        public static NPC GetClosestEnemy(Vector2 position, List<int> excludedNPCs, float range, bool careAboutLineOfSight)
         {
             NPC closestNPC = null;
             float rangeSquared = range * range;
@@ -50,7 +51,7 @@ namespace ThreatOfPrecipitation
             {
                 NPC npc = Main.npc[i];
 
-                if (!npc.active || npc.CountsAsACritter || npc.friendly)
+                if (!npc.active || npc.CountsAsACritter || npc.friendly || excludedNPCs.Contains(npc.whoAmI))
                 { 
                     continue;
                 }
