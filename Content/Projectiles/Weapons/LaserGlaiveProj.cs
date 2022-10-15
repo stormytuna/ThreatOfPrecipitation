@@ -37,7 +37,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
         }
 
 		// Helper functions
-		private float StrengthMultiplier => StrengthValue / StrengthTotal;
+		private float StrengthMultiplier => (float)StrengthValue / (float)StrengthTotal;
 		private int StrengthValue => targetsHit.Count;
 		private int StrengthTotal => 6;
 		private void TryFindNewTarget(bool finalCheck)
@@ -77,24 +77,25 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 
 			// Spinny :D
 			Projectile.rotation += 0.25f * Projectile.direction; // Base
-			Projectile.rotation += Utils.GetLerpValue(0f, 0.15f, StrengthMultiplier); // Spin faster when stronger
+			Projectile.rotation += MathHelper.Lerp(0f, 0.15f, StrengthMultiplier); // Spin faster when stronger
 
 			// Lighting
 			Vector3 lightColor = new Vector3(0.5f, 1f, 1f);
-			lightColor *= Utils.GetLerpValue(0.4f, 1.2f, StrengthMultiplier);
+			lightColor *= MathHelper.Lerp(0.4f, 1.2f, StrengthMultiplier);
 			Lighting.AddLight(Projectile.Center, lightColor);
 
 			// Dust
 			int numDust = 2; // Base
-			numDust += (int)(StrengthValue); // More dust when stronger
+			numDust += StrengthValue / 2; // More dust when stronger
 			for (int i = 0; i < numDust; i++)
             {
-				if (Main.rand.NextBool(3))
+				if (Main.rand.NextBool(2))
 				{
-					Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Clentaminator_Cyan, 0f, 0f, 80, default, Utils.GetLerpValue(0.7f, 1f, StrengthTotal));
+					float scale = MathHelper.Lerp(0.8f, 1f, StrengthMultiplier);
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Clentaminator_Cyan, 0f, 0f, 100, default, scale);
+					dust.velocity *= 0.7f;
 				}
             }
-			
 
 			// AI state 1 - travelling away from player 
 			if (Projectile.ai[0] == 0f)
