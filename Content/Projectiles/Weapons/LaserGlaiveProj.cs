@@ -135,7 +135,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 				// Curved velocity homing towards next NPC
 				float rotTarget = Utils.ToRotation(target.Center - Projectile.Center);
 				float rotCurrent = Utils.ToRotation(Projectile.velocity);
-				float rotMax = MathHelper.ToRadians(10f);
+				float rotMax = MathHelper.ToRadians(25f);
 				Projectile.velocity = Utils.RotatedBy(Projectile.velocity, MathHelper.WrapAngle(MathHelper.WrapAngle(Utils.AngleTowards(rotCurrent, rotTarget, rotMax)) - Utils.ToRotation(Projectile.velocity)));
 
 				return; // Again, guard clause
@@ -153,8 +153,8 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
             }
 
 			// Add to our velocity 
-			float maxVelocity = 18f;
-			float homingStrength = 2.5f;
+			float maxVelocity = 20f;
+			float homingStrength = 4f;
 			Vector2 directionToPlayer = owner.Center - Projectile.Center;
 			directionToPlayer.Normalize();
 			directionToPlayer *= homingStrength;

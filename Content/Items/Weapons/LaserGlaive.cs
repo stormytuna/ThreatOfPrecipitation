@@ -35,7 +35,7 @@ namespace ThreatOfPrecipitation.Content.Items.Weapons
             Item.noUseGraphic = true;
             Item.damage = 80;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.shootSpeed = 10f;
+            Item.shootSpeed = 17f;
             Item.shoot = ModContent.ProjectileType<LaserGlaiveProj>();
         }
 
