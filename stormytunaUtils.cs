@@ -50,7 +50,7 @@ namespace ThreatOfPrecipitation
             {
                 NPC npc = Main.npc[i];
 
-                if (!npc.active || npc.damage <= 0 || npc.CountsAsACritter || npc.friendly)
+                if (!npc.active || npc.CountsAsACritter || npc.friendly)
                 { 
                     continue;
                 }
