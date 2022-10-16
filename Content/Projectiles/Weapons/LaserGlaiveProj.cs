@@ -17,6 +17,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
             DisplayName.SetDefault("Laser Glaive");
 			ProjectileID.Sets.TrailCacheLength[Type] = 9; // (Strength total * 3) / 2
 			ProjectileID.Sets.TrailingMode[Type] = 0;
+			ProjectileID.Sets.CultistIsResistantTo[Type] = true;
         }
 
         public override void SetDefaults()
