@@ -1,15 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
-using Microsoft.Xna.Framework;
-using System;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Projectiles;
 using ThreatOfPrecipitation.Content.Projectiles.Weapons;
 using Terraria.GameContent.Creative;
 
@@ -33,7 +24,7 @@ namespace ThreatOfPrecipitation.Content.Items.Weapons
             Item.rare = ItemRarityID.Pink;
             Item.noMelee = true;
             Item.value = Item.sellPrice(gold: 6);
-            Item.DamageType = DamageClass.Melee;
+            Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.noUseGraphic = true;
             Item.damage = 80;
             Item.useStyle = ItemUseStyleID.Swing;

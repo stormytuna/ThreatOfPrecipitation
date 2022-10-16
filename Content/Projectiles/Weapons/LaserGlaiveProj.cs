@@ -1,18 +1,10 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
-using System;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
-using ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Projectiles;
 using Terraria.Audio;
 using System.Collections.Generic;
-using ThreatOfPrecipitation;
 using System.IO;
 using Terraria.GameContent;
 
@@ -31,7 +23,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
         {
             Projectile.width = 40;
             Projectile.height = 40;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.MeleeNoSpeed;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
         }
