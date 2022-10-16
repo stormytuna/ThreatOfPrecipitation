@@ -187,8 +187,8 @@ namespace ThreatOfPrecipitation.Content.Items.Weapons
                 int halfPoint = numDust / 2;
                 float scaleLerp =  (float)(i - halfPoint) / (float)halfPoint;
                 float absScaleLerp = Math.Abs(scaleLerp);
-                dust.scale = MathHelper.Lerp(0.6f, 1f, absScaleLerp);
-                dust.alpha = (int)MathHelper.Lerp(245, 200, absScaleLerp);
+                dust.scale = MathHelper.Lerp(1f, 0.6f, absScaleLerp);
+                dust.alpha = (int)MathHelper.Lerp(200, 245, absScaleLerp);
                 dustList.Add(dust);
             }
 
