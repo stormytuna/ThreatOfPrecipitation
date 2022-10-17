@@ -44,6 +44,12 @@ namespace ThreatOfPrecipitation.Content.Items.Weapons
             Item.mana = 13;
         }
 
+        public override void UseStyle(Player player, Rectangle heldItemFrame)
+        {
+            player.itemLocation.X += -4f * player.direction;
+            player.itemLocation.Y += 4;
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Vector2 target = player.Center + new Vector2(5 * 16 * player.direction);
