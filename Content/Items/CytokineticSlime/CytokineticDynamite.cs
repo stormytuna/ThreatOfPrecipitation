@@ -17,6 +17,7 @@ namespace ThreatOfPrecipitation.Content.Items.CytokineticSlime
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("A large explosion that will destroy most tiles");
+            ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
         }
 
         public override void SetDefaults()
