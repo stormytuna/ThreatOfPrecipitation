@@ -77,11 +77,15 @@ namespace ThreatOfPrecipitation
 
             NPC closestNPC = GetClosestEnemy(startPosition, range, careAboutLineOfSight, excludeNPCs);
 
+            if (closestNPC == null)
+                return currentVelocity;
+
             return RotateVelocityHoming(currentVelocity, startPosition, closestNPC.Center, rotationMax);
         }
 
         public static Vector2 RotateVelocityHoming(Vector2 currentVelocity, Vector2 startPosition, Vector2 targetPosition, float rotationMax)
         {
+            rotationMax = MathHelper.ToRadians(rotationMax);
             float rotTarget = Utils.ToRotation(targetPosition - startPosition);
             float rotCurrent = Utils.ToRotation(currentVelocity);
             return Utils.RotatedBy(currentVelocity, MathHelper.WrapAngle(MathHelper.WrapAngle(Utils.AngleTowards(rotCurrent, rotTarget, rotationMax)) - Utils.ToRotation(currentVelocity)));
