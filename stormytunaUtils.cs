@@ -38,14 +38,16 @@ namespace ThreatOfPrecipitation
 
         /// <summary>Gets the closest hostile NPC within the range of that position</summary>
         /// <param name="position">The position, should be the center of the search and usually the center of another entity</param>
-        /// <param name="excludedNPCs">The whoAmI fields of any NPCs that are excluded from the search</param>
         /// <param name="range">The range measured in units, 1 tile is 16 units</param>
         /// <param name="careAboutLineOfSight">Whether the function should check Collision.CanHit</param>
+        /// /// <param name="excludedNPCs">The whoAmI fields of any NPCs that are excluded from the search</param>
         /// <returns>Returns the closest NPC. Returns null if no NPC is found</returns>
-        public static NPC GetClosestEnemy(Vector2 position, List<int> excludedNPCs, float range, bool careAboutLineOfSight)
+        public static NPC GetClosestEnemy(Vector2 position, float range, bool careAboutLineOfSight, List<int> excludedNPCs = null)
         {
             NPC closestNPC = null;
             float rangeSquared = range * range;
+            if (excludedNPCs == null)
+                excludedNPCs = new List<int>();
 
             for (int i = 0; i < Main.npc.Length; i++)
             {
@@ -66,6 +68,23 @@ namespace ThreatOfPrecipitation
             }
 
             return closestNPC;
+        }
+
+        public static Vector2 RotateVelocityHoming(Vector2 currentVelocity, Vector2 startPosition, float range, bool careAboutLineOfSight, float rotationMax, List<int> excludeNPCs = null)
+        {
+            if (excludeNPCs == null)
+                excludeNPCs = new List<int>();
+
+            NPC closestNPC = GetClosestEnemy(startPosition, range, careAboutLineOfSight, excludeNPCs);
+
+            return RotateVelocityHoming(currentVelocity, startPosition, closestNPC.Center, rotationMax);
+        }
+
+        public static Vector2 RotateVelocityHoming(Vector2 currentVelocity, Vector2 startPosition, Vector2 targetPosition, float rotationMax)
+        {
+            float rotTarget = Utils.ToRotation(targetPosition - startPosition);
+            float rotCurrent = Utils.ToRotation(currentVelocity);
+            return Utils.RotatedBy(currentVelocity, MathHelper.WrapAngle(MathHelper.WrapAngle(Utils.AngleTowards(rotCurrent, rotTarget, rotationMax)) - Utils.ToRotation(currentVelocity)));
         }
     }
 }
