@@ -70,6 +70,14 @@ namespace ThreatOfPrecipitation
             return closestNPC;
         }
 
+        /// <summary>Homing via rotating a projectiles velocity towards its target.\nThis overload searches for the closest enemy</summary>
+        /// <param name="currentVelocity">The projectiles current velocity</param>
+        /// <param name="startPosition">The position, should be the center of the projectile</param>
+        /// <param name="range">The range measured in units, 1 tile is 16 units</param>
+        /// <param name="careAboutLineOfSight">Whether the function should check Collision.CanHit</param>
+        /// <param name="rotationMax">The max amount of degrees the velocity can be rotated, make sure to use degrees as this function coverts it to radians</param>
+        /// <param name="excludeNPCs">The whoAmI fields of any NPCs that are excluded from the search</param>
+        /// <returns>Returns velocity rotated towards the found NPC. Returns the original velocity if no NPC is found</returns>
         public static Vector2 RotateVelocityHoming(Vector2 currentVelocity, Vector2 startPosition, float range, bool careAboutLineOfSight, float rotationMax, List<int> excludeNPCs = null)
         {
             if (excludeNPCs == null)
@@ -83,6 +91,12 @@ namespace ThreatOfPrecipitation
             return RotateVelocityHoming(currentVelocity, startPosition, closestNPC.Center, rotationMax);
         }
 
+        /// <summary>Homing via rotating a projectiles velocity towards its target.</summary>
+        /// <param name="currentVelocity">The projectiles current velocity</param>
+        /// <param name="startPosition">The start position, should be the center of the projectile</param>
+        /// <param name="targetPosition">The target position, should be the center of the target</param>
+        /// <param name="rotationMax">The max amount of degrees the velocity can be rotated, make sure to use degrees as this function coverts it to radians</param>
+        /// <returns>Returns velocity rotated towards the given position</returns>
         public static Vector2 RotateVelocityHoming(Vector2 currentVelocity, Vector2 startPosition, Vector2 targetPosition, float rotationMax)
         {
             rotationMax = MathHelper.ToRadians(rotationMax);
