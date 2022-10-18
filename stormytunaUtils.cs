@@ -17,9 +17,10 @@ namespace ThreatOfPrecipitation
         /// <summary>Gets a list of NPCs within the range of that position</summary>
         /// <param name="position">The position, should be the center of the search and usually the center of another entity</param>
         /// <param name="range">The range measured in units, 1 tile is 16 units</param>
+        /// <param name="careAboutLineOfSight">Whether the function should check Collision.CanHit</param>
         /// <param name="excludedNPCs">The whoAmI fields of any NPCs that are excluded from the search</param>
         /// <returns>A list of NPCs within range of the position</returns>
-        public static List<NPC> GetNearbyEnemies(Vector2 position, float range, List<int> excludedNPCs = null)
+        public static List<NPC> GetNearbyEnemies(Vector2 position, float range, bool careAboutLineOfSight,  List<int> excludedNPCs = null)
         {
             List<NPC> npcs = new List<NPC>();
             float rangeSquared = range * range;
@@ -36,7 +37,8 @@ namespace ThreatOfPrecipitation
                 }
 
                 float distanceSquared = Vector2.DistanceSquared(position, npc.Center);
-                if (distanceSquared <= rangeSquared)
+                bool canSee = careAboutLineOfSight ? Collision.CanHit(position, 1, 1, npc.position, npc.width, npc.height) : true;
+                if (distanceSquared <= rangeSquared && canSee)
                 {
                     npcs.Add(npc);
                 }
