@@ -119,7 +119,7 @@ namespace ThreatOfPrecipitation
         /// <summary>Checks within a rotation is within the range of another rotation</summary>
         /// <param name="rotation">The start rotation, measured in radians</param>
         /// <param name="rotationTestAgainst">The rotation to test against, measured in radians</param>
-        /// <param name="range">The range around rotation to test if rotationTestAgainst is within, measured in radians</param>
+        /// <param name="range">The range around rotation to test if rotationTestAgainst is within, checks either side with the raw range (ie it isn't halved), measured in radians</param>
         /// <returns>Returns true if rotationTestAgainst is within range of rotation. Returns false otherwise</returns>
         public static bool RotationIsWithinRange(float rotation, float rotationTestAgainst, float range)
         {
