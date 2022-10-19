@@ -2,11 +2,9 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using ThreatOfPrecipitation.Content.Projectiles;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Collections.Generic;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
@@ -52,6 +50,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
 
         public override void PostUpdate()
         {
+            // TODO: make this code better, simplyify to only using 1 counter
             if (focusCrystal)
             {
                 // Keeping track of stuff
@@ -62,7 +61,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 if (focusCrystalCounter >= focusCrystalCounterMax)
                     focusCrystalCounter = focusCrystalCounterMax;
 
-                // Dust
+                // Dust - Move into its own function thats called after the draw to make sure its only made when drawing is allowed
                 float range = focusCrystalCounter >= focusCrystalCounterMax
                     ? focusCrystalRange
                     : focusCrystalRange * stormytunaUtils.EaseOut(0.5f, 1f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 5); // Essentially gets the size of our current ring
@@ -113,6 +112,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            // TODO: Make this draw code better, make it draw in the social slot, make it not draw if the eye is empty in regular slot
             if (focusCrystal)
             {
                 var drawPlayer = drawInfo.drawPlayer;

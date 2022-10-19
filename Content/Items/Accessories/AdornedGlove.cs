@@ -8,6 +8,7 @@ using ReLogic.Content;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
+    [AutoloadEquip(EquipType.HandsOn)] // TODO: Sprite this
     public class AdornedGlove : ModItem
     {
         public override void SetStaticDefaults()
