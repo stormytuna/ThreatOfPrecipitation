@@ -30,6 +30,5 @@ namespace ThreatOfPrecipitation.Common.GlobalNPCs
             if (mercurialRachisAura)
                 damage = (int)(damage * 1.2f);
         }
-
     }
 }
