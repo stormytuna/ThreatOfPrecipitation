@@ -30,7 +30,7 @@ namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
 
             var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
-                CustomTexturePath = "ThreatOfPrecipitation/Content/NPCs/MagmaWorm/MagmaWorm_Bestiary",
+                CustomTexturePath = "ThreatOfPrecipitation/Content/NPCs/MagmaWorm/MagmaWorm_Bestiary", // TODO: update this sprite
                 Position = new Vector2(40f, 24f),
                 PortraitPositionXOverride = 10f,
                 PortraitPositionYOverride = 12f
@@ -223,7 +223,7 @@ namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
             // Spawn gores
             if (NPC.life <= 0)
             {
-                int gore1 = Mod.Find<ModGore>("MagmaWormHead_Gore1").Type;
+                int gore1 = Mod.Find<ModGore>("MagmaWormHead_Gore1").Type; // TODO: update these sprites
                 int gore2 = Mod.Find<ModGore>("MagmaWormHead_Gore2").Type;
                 int gore3 = Mod.Find<ModGore>("MagmaWormHead_Gore3").Type;
                 int gore4 = Mod.Find<ModGore>("MagmaWormHead_Gore4").Type;
