@@ -30,6 +30,7 @@ namespace ThreatOfPrecipitation.Content.Items.Pets
             Item.value = Item.buyPrice(gold: 25);
             Item.buffType = ModContent.BuffType<MagmaWormPetBuff>();
             Item.shoot = ModContent.ProjectileType<MagmaWormPetProj>();
+            Item.master = true;
         }
 
         public override void UseStyle(Player player, Rectangle heldItemFrame)
