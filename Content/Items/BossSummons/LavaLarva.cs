@@ -4,14 +4,14 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using ThreatOfPrecipitation.Content.NPCs.MagmaWorm;
+using Microsoft.Xna.Framework;
 
 namespace ThreatOfPrecipitation.Content.Items.BossSummons
 {
-    public class LavaDippedWorm : ModItem
+    public class LavaLarva : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lava-dipped Worm");
             Tooltip.SetDefault("Summons the Magma Worm\nBe careful not to use this outside it's regular habitat...");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;

@@ -47,7 +47,7 @@ namespace ThreatOfPrecipitation.Common.GlobalItems
 
             if (lavaWetCounter >= 105)
             {
-                int magmaWorm = Item.NewItem(item.GetSource_Misc("-1"), item.position, ModContent.ItemType<LavaDippedWorm>(), item.stack);
+                int magmaWorm = Item.NewItem(item.GetSource_Misc("-1"), item.position, ModContent.ItemType<LavaLarva>(), item.stack);
                 Main.item[magmaWorm].noGrabDelay = 100;
                 SoundEngine.PlaySound(SoundID.Item29, item.position); // TODO: Change this sound
                 item.active = false;
