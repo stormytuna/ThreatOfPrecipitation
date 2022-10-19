@@ -5,10 +5,16 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThreatOfPrecipitation.Common.Systems;
 using ThreatOfPrecipitation.Content.Buffs.PlayerDebuffs;
+using ThreatOfPrecipitation.Content.Items.BossBags;
+using ThreatOfPrecipitation.Content.Items.BossMasks;
+using ThreatOfPrecipitation.Content.Items.Pets;
+using ThreatOfPrecipitation.Content.Items.Placeable.Furniture;
+using ThreatOfPrecipitation.Content.Items.Weapons;
 
 namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
 {
@@ -177,6 +183,34 @@ namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
             NPC.position = temp;
 
             return true;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            // BossBag - BossBag rule checks for expert mode
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<MagmaWormBossBag>()));
+            // Trophy
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagmaWormTrophy_Item>()));
+            // Relic
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<MagmaWormRelic>()));
+            // Pet
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<MagmaWormPet>()));
+            // Rest of drops are not expert, so we need a leading conditional rule
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            // Boss mask
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MagmaWormMask>(), 7));
+
+            int[] options = new int[]
+            {
+                ModContent.ItemType<LaserGlaive>(),
+                ModContent.ItemType<VulcanShotgun>(),
+                ModContent.ItemType<PiercingWind>(),
+                ModContent.ItemType<TeslaBeacon>()
+            };
+
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, options));
+
+            npcLoot.Add(notExpertRule);
         }
 
         public override void HitEffect(int hitDirection, double damage)
