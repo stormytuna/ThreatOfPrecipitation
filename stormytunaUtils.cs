@@ -120,5 +120,64 @@ namespace ThreatOfPrecipitation
             float absDif = MathF.Abs(rotation - rotationTestAgainst);
             return absDif < range;
         }
+
+        /// <summary>Spherically interpolates between the start and end</summary>
+        /// <param name="start">The starting value, will return this when amount == 0</param>
+        /// <param name="end">The ending value, will return this when amount == 1</param>
+        /// <param name="amount">The amount to slerp by</param>
+        /// <returns>Returns the spherical interpolation between start and end</returns>
+        public static float Slerp(float start, float end, float amount)
+        {
+            if (amount == 0f)
+                return start;
+            if (amount == 1f)
+                return end;
+
+            // Calculated using a rotating vector2
+            Vector2 vector = new Vector2(1f, 0f);
+            vector = vector.RotatedBy(amount * MathHelper.PiOver2);
+            float slerpedAmount = vector.Y;
+
+            return MathHelper.Lerp(start, end, slerpedAmount);
+        }
+
+        /// <summary>Ease in interpolation between the start and end</summary>
+        /// <param name="start">The starting value, will return this when amount == 0</param>
+        /// <param name="end">The ending value, will return this when amount == 1</param>
+        /// <param name="amount">The amount to lerp by</param>
+        /// <param name="exponent">The exponent of the easing curve to use, larger values cause more easing</param>
+        /// <returns>Returns the ease in interpolation between start and end</returns>
+        public static float EaseIn(float start, float end, float amount, int exponent)
+        {
+            if (amount == 0f)
+                return start;
+            if (amount == 1f)
+                return end;
+
+            float amountExp = MathF.Pow(amount, exponent);
+            float flipExp = 1 - amountExp;
+
+            return MathHelper.Lerp(start, end, flipExp);
+        }
+
+        /// <summary>Ease out interpolation between the start and end</summary>
+        /// <param name="start">The starting value, will return this when amount == 0</param>
+        /// <param name="end">The ending value, will return this when amount == 1</param>
+        /// <param name="amount">The amount to lerp by</param>
+        /// <param name="exponent">The exponent of the easing curve to use, larger values cause more easing</param>
+        /// <returns>Returns the ease out interpolation between start and end</returns>
+        public static float EaseOut(float start, float end, float amount, int exponent)
+        {
+            if (amount == 0f)
+                return start;
+            if (amount == 1f)
+                return end;
+
+            float flip = 1 - amount;
+            float flipExp = MathF.Pow(flip, exponent);
+            float reFlip = 1 - flipExp;
+
+            return MathHelper.Lerp(start, end, reFlip);
+        }
     }
 }
