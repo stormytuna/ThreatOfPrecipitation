@@ -1,10 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 
-namespace ThreatOfPrecipitation.Content.Items.Banners
+namespace ThreatOfPrecipitation.Content.Items.Placeable.Banners
 {
     public class GipBanner : ModBanner
     {

@@ -1,14 +1,8 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 using Terraria.Audio;
 
 namespace ThreatOfPrecipitation.Content.Projectiles

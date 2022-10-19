@@ -6,8 +6,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using ThreatOfPrecipitation.Content.Items.Armor.Vanity;
+using ThreatOfPrecipitation.Content.Items.Weapons;
 
-namespace ThreatOfPrecipitation.Content.Items.BossBags
+namespace ThreatOfPrecipitation.Content.Items.Consumables.BossBags
 {
     public class MagmaWormBossBag : ModItem
     {
@@ -36,6 +38,21 @@ namespace ThreatOfPrecipitation.Content.Items.BossBags
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagmaWormMask>(), 7));
+
+            int[] options = new int[]
+            {
+                ModContent.ItemType<LaserGlaive>(),
+                ModContent.ItemType<VulcanShotgun>(),
+                ModContent.ItemType<PiercingWind>(),
+                ModContent.ItemType<TeslaBeacon>()
+            };
+
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, options));
         }
 
         public override void PostUpdate()

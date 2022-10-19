@@ -1,9 +1,6 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace ThreatOfPrecipitation.Content.Items

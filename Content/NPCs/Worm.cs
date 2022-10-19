@@ -1,13 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace ThreatOfPrecipitation.Content.NPCs
 {
-	public enum WormSegmentType
+    public enum WormSegmentType
 	{
 		/// <summary>
 		/// The head segment for the worm.  Only one "head" is considered to be active for any given worm

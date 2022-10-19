@@ -3,7 +3,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ThreatOfPrecipitation.Content.Items.BossMasks
+namespace ThreatOfPrecipitation.Content.Items.Armor.Vanity
 {
     [AutoloadEquip(EquipType.Head)]
     public class MagmaWormMask : ModItem

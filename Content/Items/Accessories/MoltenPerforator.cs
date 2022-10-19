@@ -1,17 +1,10 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
-using System;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using ThreatOfPrecipitation.Content.Projectiles.CytokineticSlime;
-using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
 using ThreatOfPrecipitation.Content.Projectiles;
 
-namespace ThreatOfPrecipitation.Content.Items.Expert
+namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
     public class MoltenPerforator : ModItem
     {

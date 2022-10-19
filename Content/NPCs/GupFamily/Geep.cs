@@ -4,11 +4,9 @@ using Terraria.ID;
 using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
-using System;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.ItemDropRules;
-using ThreatOfPrecipitation.Content.Items.CytokineticSlime;
+using ThreatOfPrecipitation.Content.Items.Consumables.CytokineticSlime;
 
 namespace ThreatOfPrecipitation.Content.NPCs.GupFamily
 {

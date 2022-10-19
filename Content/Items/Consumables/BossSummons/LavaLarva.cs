@@ -4,9 +4,8 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using ThreatOfPrecipitation.Content.NPCs.MagmaWorm;
-using Microsoft.Xna.Framework;
 
-namespace ThreatOfPrecipitation.Content.Items.BossSummons
+namespace ThreatOfPrecipitation.Content.Items.Consumables.BossSummons
 {
     public class LavaLarva : ModItem
     {

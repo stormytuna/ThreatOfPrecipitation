@@ -1,12 +1,6 @@
 using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace ThreatOfPrecipitation

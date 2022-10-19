@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThreatOfPrecipitation.Content.Buffs.Lunar;
 using Microsoft.Xna.Framework;
 using ThreatOfPrecipitation.Common.GlobalProjectiles;
-using System;
 using Terraria.Localization;
 
 namespace ThreatOfPrecipitation.Common.Players

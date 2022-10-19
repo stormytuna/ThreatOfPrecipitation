@@ -2,17 +2,14 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using System.Collections.Generic;
 using System.IO;
-using Terraria.GameContent;
-using Terraria.DataStructures;
 using System.Linq;
 
 namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 {
-	public class TeslaBeaconSentry : ModProjectile
+    public class TeslaBeaconSentry : ModProjectile
 	{
 		private ref float AI_AttackRegenCooldown => ref Projectile.ai[0];
 		private ref float AI_StoredAttacks => ref Projectile.ai[1];

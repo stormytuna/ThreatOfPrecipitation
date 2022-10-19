@@ -1,11 +1,9 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
-using Terraria.ModLoader.Utilities;
 
-namespace ThreatOfPrecipitation.Content.Items.Banners
+namespace ThreatOfPrecipitation.Content.Items.Placeable.Banners
 {
     // Helper class for creating banners
     public abstract class ModBanner : ModItem

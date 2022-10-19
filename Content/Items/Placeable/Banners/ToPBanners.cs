@@ -1,8 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.GameContent.Bestiary;
-using Terraria.ModLoader.Utilities;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -10,7 +7,7 @@ using Microsoft.Xna.Framework;
 using ThreatOfPrecipitation.Content.NPCs.GupFamily;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ThreatOfPrecipitation.Content.Items.Banners
+namespace ThreatOfPrecipitation.Content.Items.Placeable.Banners
 {
     public class ToPBanners : ModTile
     {

@@ -10,8 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThreatOfPrecipitation.Common.Systems;
 using ThreatOfPrecipitation.Content.Buffs.PlayerDebuffs;
-using ThreatOfPrecipitation.Content.Items.BossBags;
-using ThreatOfPrecipitation.Content.Items.BossMasks;
+using ThreatOfPrecipitation.Content.Items.Armor.Vanity;
+using ThreatOfPrecipitation.Content.Items.Consumables.BossBags;
 using ThreatOfPrecipitation.Content.Items.Pets;
 using ThreatOfPrecipitation.Content.Items.Placeable.Furniture;
 using ThreatOfPrecipitation.Content.Items.Weapons;
@@ -193,7 +193,7 @@ namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
             // Trophy
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagmaWormTrophy_Item>()));
             // Relic
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<MagmaWormRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<MagmaWormRelic>()));
             // Pet
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<MagmaWormPet>()));
             // Rest of drops are not expert, so we need a leading conditional rule

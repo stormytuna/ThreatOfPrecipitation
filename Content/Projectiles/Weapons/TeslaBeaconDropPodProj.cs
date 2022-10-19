@@ -2,16 +2,12 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
-using System.Collections.Generic;
-using System.IO;
-using Terraria.GameContent;
 using Terraria.DataStructures;
 
 namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 {
-	public class TeslaBeaconDropPodProj : ModProjectile
+    public class TeslaBeaconDropPodProj : ModProjectile
 	{
 		private ref float AI_WorldX => ref Projectile.ai[0];
 		private ref float AI_WorldY => ref Projectile.ai[1];
