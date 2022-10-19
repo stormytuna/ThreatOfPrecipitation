@@ -20,6 +20,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
             Item.value = Item.sellPrice(gold: 3);
             Item.rare = ItemRarityID.Expert;
             Item.accessory = true;
+            Item.expert = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
