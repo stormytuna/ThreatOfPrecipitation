@@ -37,11 +37,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
             player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
         }
 
-        public override void UpdateVanity(Player player)
-        {
-            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = true;
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()

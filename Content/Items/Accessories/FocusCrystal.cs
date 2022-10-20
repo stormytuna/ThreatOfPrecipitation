@@ -32,11 +32,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
             player.GetModPlayer<FocusCrystalPlayer>().focusCrystal = true;
             player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = !hideVisual;
         }
-
-        public override void UpdateVanity(Player player)
-        {
-            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = true;
-        }
     }
 
     public class FocusCrystalGlobalProjectile : GlobalProjectile
