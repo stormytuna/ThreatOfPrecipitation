@@ -179,5 +179,14 @@ namespace ThreatOfPrecipitation
 
             return MathHelper.Lerp(start, end, reFlip);
         }
+
+        /// <summary>Sets the magnitude of the vector to the given magnitude</summary>
+        /// <param name="vector">The vector to be changed</param>
+        /// <param name="magnitude">The new magnitude of the vector</param>
+        public static void SetMagnitude(this Vector2 vector, float magnitude)
+        {
+            vector.Normalize();
+            vector *= magnitude;
+        }
     }
 }
