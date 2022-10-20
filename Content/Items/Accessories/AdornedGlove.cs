@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
@@ -32,10 +33,16 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FocusCrystalPlayer>().focusCrystal = true;
+            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = !hideVisual;
             player.kbGlove = true;
             player.autoReuseGlove = true;
             player.meleeScaleGlove = true;
             player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
+        }
+
+        public override void UpdateVanity(Player player)
+        {
+            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = true;
         }
 
         public override void AddRecipes()

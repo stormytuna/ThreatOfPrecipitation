@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria.GameContent.ItemDropRules;
+using System;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
@@ -28,43 +30,100 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FocusCrystalPlayer>().focusCrystal = true;
+            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = !hideVisual;
+        }
+
+        public override void UpdateVanity(Player player)
+        {
+            player.GetModPlayer<FocusCrystalPlayer>().focusCrystalVisuals = true;
+        }
+    }
+
+    public class FocusCrystalGlobalProjectile : GlobalProjectile
+    {
+        public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => entity.type == ProjectileID.Geode;
+
+        public override void Kill(Projectile projectile, int timeLeft)
+        {
+            if (Main.rand.NextBool(10))
+            {
+                int i = Item.NewItem(projectile.GetSource_Loot(), projectile.getRect(), ModContent.ItemType<FocusCrystal>());
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 1f);
+                }
+            }
         }
     }
 
     public class FocusCrystalPlayer : ModPlayer
     {
         public bool focusCrystal;
-        public bool oldFocusCrystal = false;
+        public bool focusCrystalVisuals;
 
         public int focusCrystalCounter = 0;
         public int focusCrystalCounterMax = 80;
-        public int focusCrystalDecayCounter = 0;
 
         private Asset<Texture2D> focusCrystalAuraTexture;
         private Asset<Texture2D> focusCrystalAuraFadeTexture;
 
+        float focusCrystalRange = 16 * 16f;
+
         public override void ResetEffects()
         {
             focusCrystal = false;
+            focusCrystalVisuals = false;
         }
 
         public override void PostUpdate()
         {
-            // TODO: make this code better, simplyify to only using 1 counter
-            if (focusCrystal)
-            {
-                // Keeping track of stuff
-                if (!oldFocusCrystal)
-                    focusCrystalCounter = 0;
-
+            if (focusCrystalVisuals)
                 focusCrystalCounter++;
-                if (focusCrystalCounter >= focusCrystalCounterMax)
-                    focusCrystalCounter = focusCrystalCounterMax;
+            else
+                focusCrystalCounter--;
 
-                // Dust - Move into its own function thats called after the draw to make sure its only made when drawing is allowed
-                float range = focusCrystalCounter >= focusCrystalCounterMax
+            focusCrystalCounter = (int)MathHelper.Clamp((float)focusCrystalCounter, 0f, focusCrystalCounterMax);
+        }
+
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (focusCrystal)
+                TryFocusCrystalDamageIncrease(target, ref damage);
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (focusCrystal)
+                TryFocusCrystalDamageIncrease(target, ref damage);
+        }
+
+        public void TryFocusCrystalDamageIncrease(NPC target, ref int damage) => damage = Vector2.DistanceSquared(target.Center, Player.Center) < focusCrystalRange * focusCrystalRange ? (int)((float)damage * 1.2f) : damage;
+
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (focusCrystalCounter > 0)
+            {
+                TryGetTextures();
+
+                // Draw circle
+                Vector2 drawPosition = Player.Center - Main.screenPosition;
+                drawPosition = new Vector2((int)drawPosition.X, (int)drawPosition.Y); // Prevents sprite from wiggling
+                Rectangle rect = new Rectangle(0, 0, 513, 513);
+                Vector2 origin = rect.Size() / 2f;
+                float scale = stormytunaUtils.EaseOut(0.5f, 1.2f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 4);
+                float easeValue = stormytunaUtils.EaseOut(0f, 1f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 4);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+                Main.spriteBatch.Draw(focusCrystalAuraTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(focusCrystalAuraFadeTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
+
+                // Do dust
+                float range = focusCrystalCounter >= focusCrystalCounterMax // Looks wacky, essentially gets the size of our current ring
                     ? focusCrystalRange
-                    : focusCrystalRange * stormytunaUtils.EaseOut(0.5f, 1f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 5); // Essentially gets the size of our current ring
+                    : focusCrystalRange * stormytunaUtils.EaseOut(0.5f, 1f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 5); 
                 for (int i = 0; i < 20; i++)
                 {
                     if (Main.rand.NextBool(2))
@@ -80,78 +139,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                         d.noLight = true;
                     }
                 }
-            }
-            else
-            {
-                focusCrystalCounter = 0;
-            }
-
-            // Try set decay counter
-            if (!focusCrystal && oldFocusCrystal)
-            {
-                focusCrystalDecayCounter = focusCrystalCounterMax;
-            }
-
-            focusCrystalDecayCounter--;
-            oldFocusCrystal = focusCrystal;
-        }
-
-        float focusCrystalRange = 16 * 16f;
-
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
-        {
-            TryFocusCrystalDamageIncrease(target, ref damage);
-        }
-
-        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            TryFocusCrystalDamageIncrease(target, ref damage);
-        }
-
-        public void TryFocusCrystalDamageIncrease(NPC target, ref int damage) => damage = Vector2.DistanceSquared(target.Center, Player.Center) < focusCrystalRange * focusCrystalRange ? (int)((float)damage * 1.2f) : damage;
-
-        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {
-            // TODO: Make this draw code better, make it draw in the social slot, make it not draw if the eye is empty in regular slot
-            if (focusCrystal)
-            {
-                var drawPlayer = drawInfo.drawPlayer;
-
-                TryGetTextures();
-
-                Vector2 drawPosition = drawPlayer.Center - Main.screenPosition;
-                drawPosition = new Vector2((int)drawPosition.X, (int)drawPosition.Y);
-                Rectangle rect = new Rectangle(0, 0, 513, 513);
-                Vector2 origin = rect.Size() / 2f;
-                float scale = stormytunaUtils.EaseOut(0.5f, 1.2f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 5);
-                float easeValue = stormytunaUtils.EaseOut(0f, 1f, (float)focusCrystalCounter / (float)focusCrystalCounterMax, 5);
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-                Main.spriteBatch.Draw(focusCrystalAuraTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
-                Main.spriteBatch.Draw(focusCrystalAuraFadeTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
-            }
-            else if (!focusCrystal && focusCrystalDecayCounter > 0)
-            {
-                var drawPlayer = drawInfo.drawPlayer;
-
-                TryGetTextures();
-
-                Vector2 drawPosition = drawPlayer.Center - Main.screenPosition;
-                drawPosition = new Vector2((int)drawPosition.X, (int)drawPosition.Y);
-                Rectangle rect = new Rectangle(0, 0, 513, 513);
-                Vector2 origin = rect.Size() / 2f;
-                float scale = stormytunaUtils.EaseIn(1.2f, 0.5f, (float)focusCrystalDecayCounter / (float)focusCrystalCounterMax, 5);
-                float easeValue = stormytunaUtils.EaseIn(1f, 0f, (float)focusCrystalDecayCounter / (float)focusCrystalCounterMax, 5);
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-                Main.spriteBatch.Draw(focusCrystalAuraTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
-                Main.spriteBatch.Draw(focusCrystalAuraFadeTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
             }
         }
 
