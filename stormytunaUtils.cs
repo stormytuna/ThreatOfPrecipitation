@@ -75,6 +75,40 @@ namespace ThreatOfPrecipitation
             return closestNPC;
         }
 
+        /// <summary>Gets a list of players within the range of that position</summary>
+        /// <param name="position">The position, should be the center of the search and usually the center of another entity</param>
+        /// <param name="range">The range measured in units, 1 tile is 16 units</param>
+        /// <param name="careAboutLineOfSight">Whether the function should check Collision.CanHit</param>
+        /// <param name="team">The team the player should match. 0 means team doesn't matter</param>
+        /// <param name="excludedPlayers">The whoAmI fields of any players that are excluded from the search</param>
+        /// <returns>A list of players within range of the position</returns>
+        public static List<Player> GetNearbyPlayers(Vector2 position, float range, bool careAboutLineOfSight, int team = 0, List<int> excludedPlayers = null)
+        {
+            List<Player> players = new List<Player>();
+            float rangeSquared = range * range;
+            if (excludedPlayers == null)
+                excludedPlayers = new List<int>();
+
+            for (int i = 0; i < Main.player.Length; i++)
+            {
+                Player player = Main.player[i];
+
+                if (!player.active || player.dead || (player.team != team && team != 0) || excludedPlayers.Contains(player.whoAmI))
+                {
+                    continue;
+                }
+
+                float distanceSquared = Vector2.DistanceSquared(position, player.Center);
+                bool canSee = careAboutLineOfSight ? Collision.CanHit(position, 1, 1, player.position, player.width, player.height) : true;
+                if (distanceSquared <= rangeSquared && canSee)
+                {
+                    players.Add(player);
+                }
+            }
+
+            return players;
+        }
+
         /// <summary>Homing via rotating a projectiles velocity towards its target.\nThis overload searches for the closest enemy</summary>
         /// <param name="currentVelocity">The projectiles current velocity</param>
         /// <param name="startPosition">The position, should be the center of the projectile</param>
