@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
@@ -19,6 +20,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 "Enables autoswing for melee weapons\n" +
                 "Increases the size of melee weapons\n" +
                 "20% increased damage to enemies that are close to you");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

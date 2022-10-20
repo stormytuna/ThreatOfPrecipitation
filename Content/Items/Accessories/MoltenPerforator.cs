@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using ThreatOfPrecipitation.Content.Projectiles;
+using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
@@ -11,6 +12,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Chance on hit for 3 exploding fireballs to spew out of your target");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
