@@ -79,7 +79,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
             focusCrystalCounter = (int)MathHelper.Clamp((float)focusCrystalCounter, 0f, focusCrystalCounterMax);
 
             
-            if (focusCrystalVisuals)
+            if (focusCrystalCounter > 0)
             {
                 // Do dust
                 float range = focusCrystalCounter >= focusCrystalCounterMax // Looks wacky, essentially gets the size of our current ring
