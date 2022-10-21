@@ -6,6 +6,7 @@ using Terraria.Enums;
 using Microsoft.Xna.Framework;
 using ThreatOfPrecipitation.Content.NPCs.GupFamily;
 using Microsoft.Xna.Framework.Graphics;
+using ThreatOfPrecipitation.Content.Items.Accessories;
 
 namespace ThreatOfPrecipitation.Content.Items.Placeable.Banners
 {
@@ -46,6 +47,9 @@ namespace ThreatOfPrecipitation.Content.Items.Placeable.Banners
 					break;
 				case 2:
 					itemType = ModContent.ItemType<GupBanner>();
+					break;
+				case 3:
+					itemType = ModContent.ItemType<Warbanner>();
 					break;
             }
 
