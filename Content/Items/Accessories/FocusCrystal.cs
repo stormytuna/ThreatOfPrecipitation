@@ -154,7 +154,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
 
         public Color GetAuraDrawColor(float easeValue, Color lightColor)
         {
-            Color color = Color.Lerp(new Color(255, 0, 0, 0), new Color(255, 0, 0, 255), easeValue);
+            Color color = Color.Lerp(new Color(0, 0, 0, 0), new Color(255, 0, 0, 180), easeValue);
             lightColor.G = 0;
             lightColor.B = 0;
             return Color.Lerp(color, lightColor, 0.5f);
