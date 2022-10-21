@@ -10,6 +10,7 @@ using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
+    // [AutoloadEquip(EquipType.Back)] // TODO: implement this
     public class Gasoline : ModItem
     {
         public override void SetStaticDefaults()

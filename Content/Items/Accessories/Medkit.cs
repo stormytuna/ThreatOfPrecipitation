@@ -6,6 +6,7 @@ using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
+    //[AutoloadEquip(EquipType.Waist)] // TODO: implement this
     public class Medkit : ModItem
     {
         public override void SetStaticDefaults()
