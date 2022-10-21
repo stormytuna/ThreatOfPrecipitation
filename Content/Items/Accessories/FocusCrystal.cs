@@ -60,7 +60,10 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public int focusCrystalCounter = 0;
         public int focusCrystalCounterMax = 80;
 
-        public float focusCrystalRange = 16 * 16f;
+        public float focusCrystalRange = 12 * 16f;
+
+        private Asset<Texture2D> focusCrystalAuraTexture;
+        private Asset<Texture2D> focusCrystalAuraFadeTexture;
 
         public override void ResetEffects()
         {
@@ -78,7 +81,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
 
             focusCrystalCounter = (int)MathHelper.Clamp((float)focusCrystalCounter, 0f, focusCrystalCounterMax);
 
-            
+
             if (focusCrystalCounter > 0)
             {
                 // Do dust
@@ -98,10 +101,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                     d.noLight = true;
                 }
             }
-
-            // Spawn projectile if necessary, checks for if we should kill it are done in the projectile AI
-            if (focusCrystalCounter > 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<FocusCrystalProjectile>()] < 1)
-                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<FocusCrystalProjectile>(), 0, 0f, Player.whoAmI);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -117,36 +116,11 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         }
 
         public void TryFocusCrystalDamageIncrease(NPC target, ref int damage) => damage = Vector2.DistanceSquared(target.Center, Player.Center) < focusCrystalRange * focusCrystalRange ? (int)((float)damage * 1.2f) : damage;
-    }
 
-    public class FocusCrystalProjectile : ModProjectile
-    {
-        private Asset<Texture2D> focusCrystalAuraTexture;
-        private Asset<Texture2D> focusCrystalAuraFadeTexture;
-
-        public override void SetDefaults()
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            Projectile.height = 2;
-            Projectile.width = 2;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.ignoreWater = true;
-            Projectile.aiStyle = -1;
-        }
-
-        public override void AI()
-        {
-            var owner = Main.player[Projectile.owner];
-            Projectile.Center = owner.Center;
-            Projectile.velocity = Vector2.Zero;
-            if (owner.GetModPlayer<FocusCrystalPlayer>().focusCrystalCounter <= 0 || !owner.active || owner.dead)
-                Projectile.Kill();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            var player = Main.player[Projectile.owner];
-            var modPlayer = Main.player[Projectile.owner].GetModPlayer<FocusCrystalPlayer>();
+            var player = drawInfo.drawPlayer;
+            var modPlayer = player.GetModPlayer<FocusCrystalPlayer>();
 
             if (modPlayer.focusCrystalCounter > 0)
             {
@@ -156,20 +130,18 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 Vector2 drawPosition = player.Center - Main.screenPosition;
 
                 drawPosition = new Vector2((int)drawPosition.X, (int)drawPosition.Y); // Prevents sprite from wiggling
-                Rectangle rect = new Rectangle(0, 0, 513, 513);
+                Rectangle rect = new Rectangle(0, 0, focusCrystalAuraTexture.Width(), focusCrystalAuraTexture.Height());
                 Vector2 origin = rect.Size() / 2f;
                 float scale = stormytunaUtils.EaseOut(0.5f, 1f, (float)modPlayer.focusCrystalCounter / (float)modPlayer.focusCrystalCounterMax, 4);
                 float easeValue = stormytunaUtils.EaseOut(0f, 1f, (float)modPlayer.focusCrystalCounter / (float)modPlayer.focusCrystalCounterMax, 4);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
-                Main.spriteBatch.Draw(focusCrystalAuraTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
-                Main.spriteBatch.Draw(focusCrystalAuraFadeTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue), 0f, origin, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(focusCrystalAuraTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue, Lighting.GetColor(player.Center.ToTileCoordinates())), 0f, origin, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(focusCrystalAuraFadeTexture.Value, drawPosition, rect, GetAuraDrawColor(easeValue, Lighting.GetColor(player.Center.ToTileCoordinates())), 0f, origin, scale, SpriteEffects.None, 0);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
             }
-
-            return false;
         }
 
         public void TryGetTextures()
@@ -180,6 +152,12 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 focusCrystalAuraFadeTexture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/Items/Accessories/FocusCrystal_AuraFade");
         }
 
-        public Color GetAuraDrawColor(float easeValue) => Color.Lerp(new Color(255, 0, 0, 0), new Color(255, 0, 0, 255), easeValue);
+        public Color GetAuraDrawColor(float easeValue, Color lightColor)
+        {
+            Color color = Color.Lerp(new Color(255, 0, 0, 0), new Color(255, 0, 0, 255), easeValue);
+            lightColor.G = 0;
+            lightColor.B = 0;
+            return Color.Lerp(color, lightColor, 0.5f);
+        }
     }
 }
