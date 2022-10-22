@@ -64,7 +64,6 @@ namespace ThreatOfPrecipitation.Content.NPCs.MagmaWorm
             NPC.value = 120000f;
             NPC.scale = 1.25f;
             NPC.boss = true;
-            NPC.netAlways = true;
             Music = MusicID.Boss2;
         }
 
