@@ -16,7 +16,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Allies in range (including you) gain 8% increased damage and 25% increased movement speed");
+            Tooltip.SetDefault("Allies in range gain 8% increased damage and 20% increased movement speed");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -44,7 +44,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public int warbannerCounter = 0;
         public int warbannerCounterMax = 80;
 
-        private float warbannerRange = 60f * 16f;
+        private float warbannerRange = 50f * 16f;
 
         private Asset<Texture2D> warbannerAuraTexture;
         private Asset<Texture2D> warbannerAuraFadeTexture;
@@ -83,7 +83,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 // Do dust
                 float range = warbannerCounter >= warbannerCounterMax // Looks wacky, essentially gets the size of our current ring
                     ? warbannerRange
-                    : warbannerRange * stormytunaUtils.EaseOut(0.5f, 1f, (float)warbannerCounter / (float)warbannerCounterMax, 5);
+                    : warbannerRange * stormytunaUtils.EaseOut(0.3f, 1f, (float)warbannerCounter / (float)warbannerCounterMax, 5);
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 randomVector = new Vector2(range, 0f).RotatedByRandom(MathHelper.TwoPi);
@@ -147,7 +147,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Inspired");
-            Description.SetDefault("8% increased damage and 25% increased movement speed");
+            Description.SetDefault("8% increased damage and 20% increased movement speed");
             Main.debuff[Type] = false;
             Main.buffNoTimeDisplay[Type] = true;
         }
@@ -155,7 +155,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetDamage(DamageClass.Generic) += 0.08f;
-            player.moveSpeed += 0.25f;
+            player.moveSpeed += 0.2f;
         }
     }
 }
