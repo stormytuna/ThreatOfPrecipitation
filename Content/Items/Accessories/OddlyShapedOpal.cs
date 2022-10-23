@@ -128,7 +128,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
     {
         private Asset<Texture2D> opalNecklaceTexture;
         private Asset<Texture2D> opalShineTexture;
-        private Asset<Texture2D> opalAloneTexture;
 
         public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.GetModPlayer<OddlyShapedOpalPlayer>().oddlyShapedOpalVisuals;
 
@@ -140,8 +139,6 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 opalNecklaceTexture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/Items/Accessories/OddlyShapedOpal_Neck");
             if (opalShineTexture == null)
                 opalShineTexture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/Items/Accessories/OddlyShapedOpal_Shine");
-            if (opalAloneTexture == null)
-                opalAloneTexture = ModContent.Request<Texture2D>("ThreatOfPrecipitation/Content/Items/Accessories/OddlyShapedOpal_Opal");
 
             // Set some stuff used in drawing
             var drawPlayer = drawInfo.drawPlayer;
