@@ -74,7 +74,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
             oddlyShapedOpalCounter--;
 
             // Dust
-            if (oddlyShapedOpalCounter < 0)
+            if (oddlyShapedOpalCounter < 0 && oddlyShapedOpalVisuals)
             {
                 if (Main.rand.NextBool(5) && Player.mount.Type == MountID.None)
                 {
