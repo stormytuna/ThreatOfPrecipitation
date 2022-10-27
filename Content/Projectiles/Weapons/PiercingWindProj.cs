@@ -49,7 +49,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 
             // Light homing
             float range = 30 * 16f;
-            NPC closestNPC = stormytunaUtils.GetClosestEnemy(Projectile.Center, range, true);
+            NPC closestNPC = stormytunaUtils.GetClosestEnemy(Projectile.Center, range, true, true);
             // Guard clause
             if (closestNPC == null)
                 return;

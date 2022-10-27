@@ -90,7 +90,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 				return;
 			}
 
-			List<NPC> closeNPCs = stormytunaUtils.GetNearbyEnemies(Projectile.Center, range, true);
+			List<NPC> closeNPCs = stormytunaUtils.GetNearbyEnemies(Projectile.Center, range, true, false);
 			while (closeNPCs.Count > 0)
             {
 				NPC randomNPC = closeNPCs[Main.rand.Next(0, closeNPCs.Count)];

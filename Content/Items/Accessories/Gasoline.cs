@@ -113,7 +113,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
                 #endregion
 
                 // Actual damage
-                List<NPC> closeNPCs = stormytunaUtils.GetNearbyEnemies(target.Center, gasolineExplosionRange, true);
+                List<NPC> closeNPCs = stormytunaUtils.GetNearbyEnemies(target.Center, gasolineExplosionRange, true, false);
                 foreach (NPC npc in closeNPCs)
                 {
                     int direction = MathF.Sign((npc.Center - target.Center).X);

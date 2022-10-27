@@ -35,7 +35,7 @@ namespace ThreatOfPrecipitation.Content.Projectiles.Weapons
 		private int StrengthTotal => 6;
 		private void TryFindNewTarget(bool finalCheck)
         {
-			NPC target = stormytunaUtils.GetClosestEnemy(Projectile.Center, searchRange, true, targetsHit);
+			NPC target = stormytunaUtils.GetClosestEnemy(Projectile.Center, searchRange, true, true, targetsHit);
 			if (target == null)
 			{
 				currentTarget = -1;
