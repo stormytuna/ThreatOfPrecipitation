@@ -2,6 +2,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace ThreatOfPrecipitation
 {
@@ -225,6 +226,112 @@ namespace ThreatOfPrecipitation
         {
             vector.Normalize();
             vector *= magnitude;
+        }
+
+        /// <summary>Converts an integer coin value to a string</summary>
+        /// <param name="coinValue">The coin value</param>
+        /// <param name="useIcons">Whether the string should use coin icons or coin names</param>
+        /// <param name="useColors">Whether the string should colour the number of coins</param>
+        /// <returns>Returns a string representing the coin value</returns>
+        public static string CoinValueToString(int coinValue, bool useIcons, bool useColors)
+        {
+            // Code copied from vanilla - PopupText.ValueToName()
+            int platinumCoins = 0;
+            int goldCoins = 0;
+            int silverCoins = 0;
+            int copperCoins = 0;
+            while (coinValue > 0)
+            {
+                if (coinValue >= 1000000)
+                {
+                    coinValue -= 1000000;
+                    platinumCoins++;
+                }
+                else if (coinValue >= 10000)
+                {
+                    coinValue -= 10000;
+                    goldCoins++;
+                }
+                else if (coinValue >= 100)
+                {
+                    coinValue -= 100;
+                    silverCoins++;
+                }
+                else if (coinValue >= 1)
+                {
+                    coinValue--;
+                    copperCoins++;
+                }
+            }
+
+            string text = "";
+            if (!useIcons)
+            {
+                if (!useColors)
+                {
+                    if (platinumCoins > 0)
+                        text = text + platinumCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Platinum"));
+
+                    if (goldCoins > 0)
+                        text = text + goldCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Gold"));
+
+                    if (silverCoins > 0)
+                        text = text + silverCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Silver"));
+
+                    if (copperCoins > 0)
+                        text = text + copperCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Copper"));
+                }
+                else
+                {
+                    if (platinumCoins > 0)
+                        text = text + $"[c/DCDCC6:{platinumCoins}]" + string.Format(" {0} ", Language.GetTextValue("Currency.Platinum"));
+
+                    if (goldCoins > 0)
+                        text = text + $"[c/E0C95C:{goldCoins}]" + string.Format(" {0} ", Language.GetTextValue("Currency.Gold"));
+
+                    if (silverCoins > 0)
+                        text = text + $"[c/B5C0C1:{silverCoins}]" + string.Format(" {0} ", Language.GetTextValue("Currency.Silver"));
+
+                    if (copperCoins > 0)
+                        text = text + $"[c/F68A60:{copperCoins}]" + string.Format(" {0} ", Language.GetTextValue("Currency.Copper"));
+                }
+            }
+            else
+            {
+                if (!useColors)
+                {
+                    if (platinumCoins > 0)
+                        text = text + platinumCoins + "[i:74] ";
+
+                    if (goldCoins > 0)
+                        text = text + goldCoins + "[i:73] ";
+
+                    if (silverCoins > 0)
+                        text = text + silverCoins + "[i:72] ";
+
+                    if (copperCoins > 0)
+                        text = text + copperCoins + "[i:71] ";
+                }
+                else
+                {
+                    if (platinumCoins > 0)
+                        text = text + $"[c/DCDCC6:{platinumCoins}]" + "[i:74] ";
+
+                    if (goldCoins > 0)
+                        text = text + $"[c/E0C95C:{goldCoins}]" + "[i:73] ";
+
+                    if (silverCoins > 0)
+                        text = text + $"[c/B5C0C1:{silverCoins}]" + "[i:72] ";
+
+                    if (copperCoins > 0)
+                        text = text + $"[c/F68A60:{copperCoins}]" + "[i:71] ";
+                }
+            }
+
+            if (text.Length > 1)
+                text = text.Substring(0, text.Length - 1);
+
+            return text;
         }
     }
 }

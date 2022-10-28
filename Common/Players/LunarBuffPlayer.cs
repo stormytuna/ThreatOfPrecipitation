@@ -428,50 +428,7 @@ namespace ThreatOfPrecipitation.Common.Players
             #region Visuals
             if (coinValueLost > 0)
             {
-                // Code copied from vanilla - PopupText.ValueToName()
-                int platinumCoins = 0;
-                int goldCoins = 0;
-                int silverCoins = 0;
-                int copperCoins = 0;
-                while (coinValueLost > 0)
-                {
-                    if (coinValueLost >= 1000000)
-                    {
-                        coinValueLost -= 1000000;
-                        platinumCoins++;
-                    }
-                    else if (coinValueLost >= 10000)
-                    {
-                        coinValueLost -= 10000;
-                        goldCoins++;
-                    }
-                    else if (coinValueLost >= 100)
-                    {
-                        coinValueLost -= 100;
-                        silverCoins++;
-                    }
-                    else if (coinValueLost >= 1)
-                    {
-                        coinValueLost--;
-                        copperCoins++;
-                    }
-                }
-
-                string combatText = "Lost ";
-                if (platinumCoins > 0)
-                    combatText = combatText + platinumCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Platinum"));
-
-                if (goldCoins > 0)
-                    combatText = combatText + goldCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Gold"));
-
-                if (silverCoins > 0)
-                    combatText = combatText + silverCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Silver"));
-
-                if (copperCoins > 0)
-                    combatText = combatText + copperCoins + string.Format(" {0} ", Language.GetTextValue("Currency.Copper"));
-
-                if (combatText.Length > 1)
-                    combatText = combatText.Substring(0, combatText.Length - 1);
+                string combatText = "Lost " + stormytunaUtils.CoinValueToString(coinValueLost, false, false);
 
                 int ct = CombatText.NewText(Player.getRect(), Color.Red, combatText);
                 Main.combatText[ct].velocity *= 0.6f;
