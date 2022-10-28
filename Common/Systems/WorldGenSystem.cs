@@ -15,8 +15,6 @@ namespace ThreatOfPrecipitation.Common.Systems
 {
     public class WorldGenSystem : ModSystem
     {
-        int[] dungeonBricks = new int[] { TileID.BlueDungeonBrick, TileID.GreenDungeonBrick, TileID.PinkDungeonBrick };
-
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             int dungeonIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
