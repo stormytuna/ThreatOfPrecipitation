@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using ThreatOfPrecipitation.Content.Items.Placeable.Banners;
+using ThreatOfPrecipitation.Content.Tiles;
 
 namespace ThreatOfPrecipitation.Common.Systems
 {
@@ -22,6 +23,12 @@ namespace ThreatOfPrecipitation.Common.Systems
             if (dungeonIndex != -1)
             {
                 tasks.Insert(dungeonIndex + 1, new PassLegacy("Warbanners", Warbanners));
+            }
+
+            int heartCrystalsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Life Crystals"));
+            if (heartCrystalsIndex != -1)
+            {
+                tasks.Insert(heartCrystalsIndex + 1, new PassLegacy("Shrines", Shrines));
             }
         }
 
@@ -75,6 +82,62 @@ namespace ThreatOfPrecipitation.Common.Systems
                 {
                     WorldGen.PlaceTile(x, y, ModContent.TileType<ToPBanners>(), mute: true, forced: false, -1, 3);
                     numPlaced++;
+                }
+            }
+        }
+
+        private void Shrines(GenerationProgress progress, GameConfiguration _)
+        {
+            progress.Message = "Placing shrines";
+
+            for (int i = 0; i < Main.maxTilesX * Main.maxTilesY * 2E-05; i++)
+            {
+                float completion = (float)((double)i / Main.maxTilesX * Main.maxTilesY * 1E-06);
+                progress.Set(completion);
+
+                bool finished = false;
+                int numTries = 0;
+                while (!finished)
+                {
+                    bool placed = false;
+
+                    // Try placing a shrine
+                    int x = WorldGen.genRand.Next(40, Main.maxTilesX - 40);
+                    int y = WorldGen.genRand.Next((int)(Main.worldSurface * 2.0 + Main.rockLayer) / 3, Main.maxTilesY - 300);
+                    for (int k = y; k < Main.maxTilesY; k++)
+                    {
+                        if (Main.tile[x, k].HasTile && Main.tileSolid[Main.tile[x, k].TileType])
+                        {
+                            int num = k - 1;
+
+                            // Guard clauses
+                            // If tile is wet, don't place here
+                            if (Main.tile[x, num - 1].LiquidAmount > 0 || Main.tile[x - 1, num - 1].LiquidAmount > 0 || Main.tile[x + 1, num - 1].LiquidAmount > 0)
+                                break;
+
+                            // If tile doesn't have enough empty tiles, don't place here
+                            if (!WorldGen.EmptyTileCheck(x - 1, x + 1, num - 3, num))
+                                break;
+
+                            // If tile is in the dungeon, don't place here
+                            if (Main.wallDungeon[Main.tile[x, num].WallType])
+                                break;
+
+                            WorldGen.Place3x4(x, num, (ushort)ModContent.TileType<ChanceShrine>(), 0);
+                            ShrineSystem.Instance.RegisterShrinePlacedByWorld(x, num);
+                            placed = true;
+                        }
+                    }
+
+                    if (placed)
+                        finished = true;
+
+                    else
+                    {
+                        numTries++;
+                        if (numTries > 10000)
+                            finished = true;
+                    }
                 }
             }
         }
