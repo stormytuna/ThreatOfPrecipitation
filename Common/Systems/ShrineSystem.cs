@@ -99,9 +99,9 @@ namespace ThreatOfPrecipitation.Common.Systems
             {
                 list.Add(new TagCompound()
                 {
-                    {"key", kvp.Key.Item1},
-                    {"key1", kvp.Key.Item2},
-                    {"value", kvp.Value }
+                    { "key", kvp.Key.Item1 },
+                    { "key1", kvp.Key.Item2 },
+                    { "value", kvp.Value }
                 });
             }
 
