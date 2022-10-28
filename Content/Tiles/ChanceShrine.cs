@@ -94,7 +94,7 @@ namespace ThreatOfPrecipitation.Content.Tiles
                         ModContent.ItemType<Warbanner>()
                     };
 
-                    int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, j * 16, 16, 16, itemTypes[Main.rand.Next(0, 6)]);
+                    int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, j * 16, 16, 16, itemTypes[Main.rand.Next(0, 5)]);
                     Main.item[item].noGrabDelay = 100;
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
