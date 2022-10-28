@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -69,8 +70,15 @@ namespace ThreatOfPrecipitation.Content.Tiles
 
             // Guard clause
             int shrineCost = ShrineSystem.Instance.GetShrineCost(i, j);
-            if (shrineCost == -1 || !player.CanBuyItem(shrineCost) || ShrineSystem.Instance.IsShrineUsedUp(i, j))
+            if (shrineCost == -1 || ShrineSystem.Instance.IsShrineUsedUp(i, j))
                 return false;
+
+            // If player doesnt have enough money to buy it
+            if (!player.CanBuyItem(shrineCost))
+            {
+                SoundEngine.PlaySound(new SoundStyle("ThreatOfPrecipitation/Assets/Sounds/InsufficientFunds"), new Vector2(i * 16, j * 16));
+                return false;
+            }
 
             if (!ShrineSystem.Instance.IsShrineUsedUp(i, j))
             {
@@ -126,6 +134,7 @@ namespace ThreatOfPrecipitation.Content.Tiles
                     #endregion
                 }
 
+                SoundEngine.PlaySound(new SoundStyle("ThreatOfPrecipitation/Assets/Sounds/ShrineActivate"), new Vector2(i * 16, j * 16));
                 player.BuyItem(shrineCost);
 
                 return true;
