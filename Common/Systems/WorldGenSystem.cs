@@ -88,9 +88,15 @@ namespace ThreatOfPrecipitation.Common.Systems
         {
             progress.Message = "Placing shrines";
 
-            for (int i = 0; i < Main.maxTilesX * Main.maxTilesY * 2E-05; i++)
+            int[] shrineTypes = new int[]
             {
-                float completion = (float)((double)i / Main.maxTilesX * Main.maxTilesY * 1E-06);
+            ModContent.TileType<ChanceShrine>(),
+            ModContent.TileType<BloodShrine>()
+            };
+
+            for (int i = 0; i < Main.maxTilesX * Main.maxTilesY * 1E-05; i++)
+            {
+                float completion = (float)((double)i / Main.maxTilesX * Main.maxTilesY * 1E-05);
                 progress.Set(completion);
 
                 bool finished = false;
@@ -121,7 +127,7 @@ namespace ThreatOfPrecipitation.Common.Systems
                             if (Main.wallDungeon[Main.tile[x, num].WallType])
                                 break;
 
-                            WorldGen.Place3x4(x, num, (ushort)ModContent.TileType<ChanceShrine>(), 0);
+                            WorldGen.Place3x4(x, num, (ushort)shrineTypes[WorldGen.genRand.Next(0, 2)], 0);
                             ShrineSystem.Instance.RegisterShrinePlacedByWorld(x, num);
                             placed = true;
                         }
