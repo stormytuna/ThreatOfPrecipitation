@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -38,8 +39,6 @@ namespace ThreatOfPrecipitation.Content.Tiles
             name.SetDefault("Shrine");
             AddMapEntry(new Color(144, 148, 144), name);
         }
-
-        public override void PlaceInWorld(int i, int j, Item item) => ShrineSystem.Instance.RegisterShrinePlacedByWorld(i, j);
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => ShrineSystem.Instance.IsShrineUsedUp(i, j);
 
@@ -105,7 +104,7 @@ namespace ThreatOfPrecipitation.Content.Tiles
 
             #region Visuals
 
-            Vector2 position = new Vector2((i * 16) + 8, (j * 16) + 8);
+            Vector2 position = new Vector2((i * 16) + 9f, (j * 16) - 27f);
 
             for (int k = 0; k < 30; k++)
             {
@@ -119,6 +118,36 @@ namespace ThreatOfPrecipitation.Content.Tiles
             SoundEngine.PlaySound(new SoundStyle("ThreatOfPrecipitation/Assets/Sounds/ShrineActivate"), new Vector2(i * 16, j * 16));
 
             return true;
+        }
+
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+            // Create some funky blood dust if this shrine is active
+            if (!ShrineSystem.Instance.IsShrineUsedUp(i, j)) 
+            {
+                // Gets the right i and j
+                Tile tile = Main.tile[i, j];
+                if (tile.TileFrameX == 36)
+                    i--;
+                if (tile.TileFrameX == 0)
+                    i++;
+                if (tile.TileFrameY == 0)
+                    j += 1;
+                if (tile.TileFrameY == 36)
+                    j--;
+                if (tile.TileFrameY == 54)
+                    j -= 2;
+
+                if (Main.rand.NextBool(1))
+                {
+                    Vector2 dustPosition = new Vector2(i * 16f, j * 16f);
+                    dustPosition += new Vector2(9f, 9f);
+                    Vector2 offset = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * 3f;
+                    dustPosition += offset;
+                    Vector2 velocity = -offset * 0.5f;
+                    Dust d = Dust.NewDustPerfect(dustPosition, DustID.Blood, velocity, Scale: Main.rand.NextFloat(0.8f, 1.2f));
+                    d.noGravity = true;
+                }
+            }
         }
     }
 }
