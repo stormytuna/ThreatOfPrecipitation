@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 
 namespace ThreatOfPrecipitation.Content.Items.Accessories
 {
-    [AutoloadEquip(EquipType.HandsOn)] // TODO: Make a better sprite using mechanical glove
+    [AutoloadEquip(EquipType.HandsOn)]
     public class AdornedGlove : ModItem
     {
         public override void SetStaticDefaults()
@@ -21,7 +21,7 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.width = 22;
-            Item.height = 30;
+            Item.height = 28;
             Item.value = Item.sellPrice(gold: 4, silver: 50);
             Item.rare = ItemRarityID.LightPurple; // 1 above pink used by Power Glove
             Item.accessory = true;

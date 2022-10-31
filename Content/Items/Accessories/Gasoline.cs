@@ -21,8 +21,8 @@ namespace ThreatOfPrecipitation.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            Item.width = 30;
-            Item.height = 30;
+            Item.width = 44;
+            Item.height = 40;
             Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.Green;
             Item.accessory = true;
